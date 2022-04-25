@@ -79,5 +79,53 @@ datos$"comb"<-interaction(datos$estado.civil.NEW, datos$nivel.estudios.NEW)
 table(datos$"comb",exclude=NULL)
 
 
+sample(letters)[1]
+
+# 1. Crear una nueva variable llamada "nivel.estudios.1" en "datos" 
+# (data.frame que se incorpora al workspace tras cargar “datos.curso1.RData”) 
+# que sea igual a la variable nivel.estudios
+# original pero sustituyendo los valores de nivel de estudios “Bajo” por “escuela”.
+
+datos$"nivel.estudios.1" <- datos$"nivel.estudios"
+
+datos$"nivel.estudios.1"[datos$"nivel.estudios.1"%in%"Bajo"]<-"Escuela"
+
+head(datos)
+
+class(datos$"nivel.estudios")
+datos$"nivel.estudios.1" <- as.factor(datos$"nivel.estudios")
+levels(datos$"nivel.estudios.1")[2]<-"Escuela"
+table(datos$"nivel.estudios.1")
+
+
+# 2. Crear una variable llamada “peso.grupos” en “datos” (data.frame que se incorpora al
+# workspace tras cargar “datos.curso1.RData”) que clasifique a las personas las tres categorías 
+# de peso siguientes: [55,60] (60,70] (70,80] (80,90]
+
+datos$"peso.grupos"<-cut(x=datos$peso, breaks=seq(55,90,10), right=T,include.lowest = T)
+table(datos$"peso.grupos")
+
+
+# 3. Crear una variable tipo factor llamada “nivel.estudios.2” en “datos” (data.frame que se
+# incorpora al workspace tras cargar “datos.curso1.RData”) a partir de la variable nivel.estudios
+# original, donde el orden de las categorías sea el siguiente: (1) “Bajo” (2) “Medio” (3) “Alto”
+
+class(datos$"nivel.estudios")
+
+table(datos$"nivel.estudios")
+
+datos$"nivel.estudios.factor" <- as.factor(datos$"nivel.estudios")
+
+levels(datos$"nivel.estudios.factor")
+
+nuevo.orden<-c("Bajo", "Medio", "Alto")
+datos$"nivel.estudios.2"<-factor(datos$"nivel.estudios.factor",levels=nuevo.orden) 
+
+levels(datos$"nivel.estudios.2")
+table(datos$nivel.estudios.2)
+
+
+
+
 
 
