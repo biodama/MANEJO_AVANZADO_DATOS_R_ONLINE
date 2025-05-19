@@ -136,3 +136,43 @@ datos$"comb"<-interaction(datos$"estado.civil", datos$"nivel.estudios")
 table(datos$"comb",exclude=NULL)
 
 
+# Nivel de estudios
+
+Bajo = "Escuela"
+Medio = "Instituto"
+Alto = "Universidad"
+
+# Manera 1 (acceso a elementos)
+
+datos$"nivel.estudios.1" <- datos$"nivel.estudios"
+datos$"nivel.estudios.1"[datos$"nivel.estudios"%in%"Bajo"]<-"Escuela"
+datos$"nivel.estudios.1"[datos$"nivel.estudios"%in%"Medio"]<-"Instituto"
+datos$"nivel.estudios.1"[datos$"nivel.estudios"%in%"Alto"]<-"Universidad"
+table(datos$"nivel.estudios",datos$"nivel.estudios.1",exclude=NULL)
+
+# Manera 2 (levels)
+
+class(datos$"nivel.estudios") # character
+datos$"nivel.estudios.1"<-as.factor(datos$"nivel.estudios")
+levels(datos$"nivel.estudios.1") # "Alto"  "Bajo"  "Medio"
+levels(datos$"nivel.estudios.1")<-c("universidad","escuela","instituto")
+table(datos$"nivel.estudios",datos$"nivel.estudios.1",exclude=NULL)
+
+
+# Exportacion en formato excel
+
+library("openxlsx") # install.packages("openxlsx")
+
+sheets<-list()
+
+sheets[[1]]<-datos
+sheets[[2]]<-datos[,c("ID","estado.nuevo","comb","nivel.estudios.1")]
+
+write.xlsx(sheets,file="/Users/pfernandezn/Desktop/datos_modificados.xlsx",
+sheetName=c("datos_completos","datos_modificados"))
+
+
+
+
+
+
